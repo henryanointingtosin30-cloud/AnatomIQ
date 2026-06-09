@@ -25,7 +25,7 @@ Licensed for Medical Education use only. See [LICENSE](LICENSE) for details.
 
 AnatomIQ is a single-page PWA that simulates real CBT exam conditions for medical anatomy students. It supports multiple academic levels (100L, 200L, 300L) with over **2,820 questions** organized by semester and course.
 
-**Live Demo**: *(deployed URL here)*  
+**Live Demo**: *https://anatom-iq-sigma.vercel.app/*  
 **Supported IDs**: U23AN1001 — U24AN2009
 
 ---
