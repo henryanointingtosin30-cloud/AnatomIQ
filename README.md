@@ -6,7 +6,7 @@
 
 > A Progressive Web App for Computer-Based Testing (CBT) preparation, designed specifically for 300L Anatomy students.
 
-**Copyright © 2026 AnatomIQ. All rights reserved.**  
+**Copyright © 2026 AnatomIQ by Henry Anointing Tosin. All rights reserved.**  
 Licensed for Medical Education use only. See [LICENSE](LICENSE) for details.
 
 ---
