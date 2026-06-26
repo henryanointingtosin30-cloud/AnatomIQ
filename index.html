@@ -1052,16 +1052,14 @@ let appState = {
 
 const SEMESTER_COURSES = {
     '100L': {
-        '1st Semester': ["CHEM111: Introductory Physical Chemistry I", "CHEM131: Introductory Organic Chemistry I", "PHYS121: Mechanics and Properties of Matter", "BIOL111: General Biology I", "GENS101: Use of English I", "GENS103: History and Philosophy of Sciences I"],
         '2nd Semester': ["CHEM112: Introductory to Physical Chemistry", "CHEM132: Introductory Organic Chemistry", "PHYS122: Electricity, Magnetism and Modern Physics", "PHYS124: Geometric and Wave Optics", "GENS104: History and Philosophy of Sciences", "BIOL112: Introduction to Ecology"]
     },
     '200L': {
-        '1st Semester': ["ANAT201: Gross Anatomy of Upper & Lower Limbs", "HPHY201: Cardiovascular Physiology", "MBCH211: General Biochemistry", "PHCL201: Introduction to Pharmacology I", "GENS201: Entrepreneurship I"],
         '2nd Semester': ["ANAT202: Gross Anatomy of Thorax and Abdomen", "HPHY206: Gastrointestinal Tract Physiology", "GENS202: Entrepreneurship and Innovation", "HPHY208: The Liver and Biliary System", "COMM204: Demography", "MBCH214: Nutrition and Nutritional Biochemistry", "PHCL202: Introduction to General Pharmacology"]
     },
     '300L': {
-        '1st Semester': ["Gross Anatomy of Head and Neck", "Systematic Histology II", "Neuro Anatomy", "Human Genetics", "Environmental Health & Field Trip", "Business Creation and Growth", "Endocrinology", "Reproduction", "Neurophysiology", "Special Senses", "Introduction to Molecular Biology and Biochemical Genetics", "Clinical Chemistry"],
-        '2nd Semester': ["Radiological Anatomy", "Histological Techniques and Histochemistry", "Biological Anthropology", "Comparative Anatomy", "Embalming & Museum Techniques", "Principles of Microscopy, Electron Microscopy & Ultrastructure", "Introduction to Molecular Genetics and Cytogenetics"]
+        '1st Semester': ["ANAT301: Gross Anatomy of Head and Neck", "ANAT303: Systematic Histology II", "ANAT305: Neuro Anatomy", "ANAT307: Human Genetics", "COMM301: Environmental Health & Field Trip", "GENS301: Business Creation and Growth", "HPHY301: Endocrinology", "HPHY303: Reproduction", "HPHY305: Neurophysiology", "HPHY307: Special Senses", "MBCH311: Introduction to Molecular Biology and Biochemical Genetics", "MBCH313: Special Topics in Medical Biochemistry", "MBCH315: Medical Biochemistry Practical II"],
+        '2nd Semester': ["ANAT302: Radiological Anatomy", "ANAT304: Histological Techniques and Histochemistry", "ANAT306: Biological Anthropology", "ANAT308: Comparative Anatomy", "ANAT312: Embalming & Museum Techniques", "ANAT314: Principles of Microscopy, Electron Microscopy & Ultrastructure", "ANAT316: Introduction to Molecular Genetics and Cytogenetics"]
     }
 };
 
@@ -2023,6 +2021,53 @@ function importQuestions(event) {
         return;
     }
 
+    // Add to Admin Panel HTML
+<div id="adminResetPanel" style="display:none; padding: 20px; background: white; border-radius: 10px; margin: 20px 0;">
+    <h3>Reset Registration Number</h3>
+    <div style="margin: 15px 0;">
+        <input type="RegNo" id="userRegNoReset" placeholder="Enter user registration number" style="padding: 10px; width: 100%; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px;">
+        <input type="text" id="newRegistrationNo" placeholder="Enter new registration number" style="padding: 10px; width: 100%; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px;">
+        <button onclick="resetUserRegistration()" style="padding: 10px 20px; background: #059669; color: white; border: none; border-radius: 5px; cursor: pointer;">Reset Registration</button>
+    </div>
+    <div id="resetStatus" style="margin: 10px 0; font-size: 14px;"></div>
+</div>
+
+// Add to JavaScript
+function resetUserRegistration() {
+    const userEmail = document.getElementById('userEmailReset').value;
+    const newRegNo = document.getElementById('newRegistrationNo').value;
+    const statusDiv = document.getElementById('resetStatus');
+    
+    if (!userEmail || !newRegNo) {
+        statusDiv.textContent = 'Please fill all fields';
+        statusDiv.style.color = 'red';
+        return;
+    }
+    
+    // Find user by registration number
+    let userFound = false;
+    for (let semester in appState.questions) {
+        for (let course in appState.questions[semester]) {
+            // Search in user database
+            if (appState.users && appState.users[userRegNo]) {
+                appState.users[userRegNo].registrationNo = newRegNo;
+                userFound = true;
+                statusDiv.textContent = `✓ Registration reset successfully for ${userRegNo}`;
+                statusDiv.style.color = 'green';
+                break;
+            }
+        }
+    }
+    
+    if (!userFound) {
+        statusDiv.textContent = 'User not found';
+        statusDiv.style.color = 'red';
+    }
+    
+    // Save to localStorage
+    localStorage.setItem('anatomyUsers', JSON.stringify(appState.users));
+}
+    
     // Route to the correct store
     let targetStore;
     if (importLevel === '100L') {
@@ -2142,9 +2187,9 @@ init();
   ">
     <h2 style="margin-top:0;color:#0d8a5f;font-size:20px;">AnatomIQ License</h2>
     <p><strong>Proprietary Software</strong></p>
-    <p>Copyright © 2026 AnatomIQ. All rights reserved.</p>
+    <p>Copyright © 2026 AnatomIQ by Henry Anointing Tosin. All rights reserved.</p>
     <p>Licensed for Medical Education use only.</p>
-    <p>Unauthorized distribution, modification, or commercial use is strictly prohibited.</p>
+    <p>Unauthorized Distribution, Modification, or Commercial use is strictly prohibited.</p>
     <button onclick="document.getElementById('licenseModal').style.display='none'" style="
       margin-top: 16px;
       background: #0d8a5f;
@@ -2152,9 +2197,9 @@ init();
       border: none;
       padding: 12px 28px;
       border-radius: 10px;
-      font-weight: 600;
+      font-weight: 800;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 16px;
     ">Close</button>
   </div>
 </div>
