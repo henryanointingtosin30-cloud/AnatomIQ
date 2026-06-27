@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "public": true,
   "buildCommand": "echo 'Build step not needed for static site'",
   "outputDirectory": ".",
   "env": {
